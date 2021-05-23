@@ -20,6 +20,9 @@ public class Employer {
     @Column(name = "id")
     private int id;
 
+    @Column(name = "user_id")
+    private int userId;
+
     @Column(name = "company_name")
     private String companyName;
 
