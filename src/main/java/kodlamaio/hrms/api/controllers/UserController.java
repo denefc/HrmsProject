@@ -1,11 +1,11 @@
 package kodlamaio.hrms.api.controllers;
 
 import kodlamaio.hrms.business.abstracts.UserService;
+import kodlamaio.hrms.core.utilities.results.DataResult;
+import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.entities.concretes.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,7 +23,18 @@ public class UserController {
     }
 
     @GetMapping("/getall")
-    public List<User> getAll(){
-        return userService.getAll();
+    public DataResult<List<User>> getAll(){
+        return this.userService.getAll();
+    }
+
+    @GetMapping("/api/getemail")
+    @ResponseBody
+    public DataResult<User> getByEmail(@RequestParam String email){
+        return userService.findByEmail(email);
+    }
+
+    @PostMapping("/add")
+    public Result add(@RequestBody User user){
+        return  this.userService.add(user);
     }
 }

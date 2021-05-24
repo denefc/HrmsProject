@@ -9,8 +9,8 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "employers")
 public class Employer {
 

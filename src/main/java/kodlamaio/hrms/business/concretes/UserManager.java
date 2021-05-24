@@ -1,6 +1,10 @@
 package kodlamaio.hrms.business.concretes;
 
 import kodlamaio.hrms.business.abstracts.UserService;
+import kodlamaio.hrms.core.utilities.results.DataResult;
+import kodlamaio.hrms.core.utilities.results.Result;
+import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
+import kodlamaio.hrms.core.utilities.results.SuccessResult;
 import kodlamaio.hrms.dataAccess.abstracts.UserDao;
 import kodlamaio.hrms.entities.concretes.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +25,19 @@ public class UserManager implements UserService {
     }
 
     @Override
-    public List<User> getAll() {
-        return userDao.findAll();
+    public DataResult<List<User>> getAll() {
+        return new SuccessDataResult<List<User>>(this.userDao.findAll(),"Data listelendi");
     }
+
+    @Override
+    public Result add(User user) {
+        this.userDao.save(user);
+        return new SuccessResult("User eklendi");
+    }
+
+    @Override
+    public DataResult<User> findByEmail(String email) {
+        return new SuccessDataResult<User>(userDao.findByEmail(email),"Email i bu olan data");
+    }
+
 }
