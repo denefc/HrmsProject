@@ -22,7 +22,6 @@ public class JobSeekersController {
 
     @Autowired
     public JobSeekersController(JobSeekerService jobSeekerService) {
-        super();
         this.jobSeekerService = jobSeekerService;
     }
 

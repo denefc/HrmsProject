@@ -23,7 +23,7 @@ public class SystemPersonnelsController {
 
     @Autowired
     public SystemPersonnelsController(SystemPersonnelService systemPersonnelService) {
-        super();
+
         this.systemPersonnelService = systemPersonnelService;
     }
 

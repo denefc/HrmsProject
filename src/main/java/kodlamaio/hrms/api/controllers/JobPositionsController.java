@@ -22,7 +22,6 @@ public class JobPositionsController {
 
     @Autowired
     public JobPositionsController(JobPositionService jobPositionService) {
-        super();
         this.jobPositionService = jobPositionService;
     }
 
