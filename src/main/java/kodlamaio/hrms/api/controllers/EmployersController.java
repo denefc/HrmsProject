@@ -10,12 +10,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@AllArgsConstructor
 @RequestMapping("/api/employer")
 public class EmployersController{
 
-    @Autowired
+
     private EmployerService employerService;
+
+    @Autowired
+    public EmployersController(EmployerService employerService) {
+        this.employerService = employerService;
+    }
 
     @GetMapping("/getall")
     public List<Employer> getAll(){
