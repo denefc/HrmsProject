@@ -3,25 +3,20 @@ package kodlamaio.hrms.entities.concretes;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+@PrimaryKeyJoinColumn(name="user_id",referencedColumnName = "id")
 @Data
 @Entity
+@EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "employers")
-public class Employer {
+public class Employer extends User {
 
-
-    @Id
-    @GeneratedValue
-    @Column(name = "id")
-    private int id;
-
-    @Column(name = "user_id")
-    private int userId;
 
     @Column(name = "company_name")
     private String companyName;
@@ -32,6 +27,6 @@ public class Employer {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @Column(name = "verify_system")
-    private boolean verify;
+    @Column(name="verification_status")
+    private boolean verificationStatus;
 }
