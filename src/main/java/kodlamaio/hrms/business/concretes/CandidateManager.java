@@ -6,20 +6,20 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kodlamaio.hrms.business.abstracts.JobSeekerService;
+import kodlamaio.hrms.business.abstracts.CandidateService;
 import kodlamaio.hrms.core.abstracts.EmailCheckService;
 import kodlamaio.hrms.core.abstracts.EmailSendService;
 import kodlamaio.hrms.core.utilities.results.ErrorResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
-import kodlamaio.hrms.dataAccess.abstracts.JobSeekerDao;
-import kodlamaio.hrms.entities.concretes.JobSeeker;
+import kodlamaio.hrms.dataAccess.abstracts.CandidateDao;
+import kodlamaio.hrms.entities.concretes.Candidate;
 
 @Service
 
-public class JobSeekerManager implements JobSeekerService {
+public class CandidateManager implements CandidateService {
 
-    private JobSeekerDao jobSeekerDao;
+    private CandidateDao candidateDao;
     private EmailCheckService emailCheckService;
     private EmailSendService emailSendService;
 
@@ -27,9 +27,9 @@ public class JobSeekerManager implements JobSeekerService {
     private List<String> identificationNumbers = new ArrayList<>();
 
     @Autowired
-    public JobSeekerManager(EmailCheckService emailCheckService, JobSeekerDao jobSeekerDao, EmailSendService emailSendService) {
+    public CandidateManager(EmailCheckService emailCheckService, CandidateDao candidateDao, EmailSendService emailSendService) {
         this.emailCheckService = emailCheckService;
-        this.jobSeekerDao = jobSeekerDao;
+        this.candidateDao = candidateDao;
         this.emailSendService = emailSendService;
 
     }
@@ -46,22 +46,22 @@ public class JobSeekerManager implements JobSeekerService {
     }
 
     @Override
-    public Result register(JobSeeker jobSeeker) {
+    public Result register(Candidate candidate) {
         Result result = new ErrorResult("Kayıt Başarısız!");
-        if (emailCheckService.emailCheck(jobSeeker.getEmail())
-                && emailIsItUsed(jobSeeker.getEmail())
-                && identificationNumberIsItUsed(jobSeeker.getIdentificationNumber())
+        if (emailCheckService.emailCheck(candidate.getEmail())
+                && emailIsItUsed(candidate.getEmail())
+                && identificationNumberIsItUsed(candidate.getIdentificationNumber())
                 ) {
-            emailSendService.emailSend(jobSeeker.getEmail());
-            this.jobSeekerDao.save(jobSeeker);
+            emailSendService.emailSend(candidate.getEmail());
+            this.candidateDao.save(candidate);
             result = new SuccessResult("Kayıt Başarılı.");
         }
         return result;
     }
 
     @Override
-    public List<JobSeeker> getAll() {
-        return this.jobSeekerDao.findAll();
+    public List<Candidate> getAll() {
+        return this.candidateDao.findAll();
     }
 
     @Override
@@ -97,8 +97,8 @@ public class JobSeekerManager implements JobSeekerService {
     }
 
     @Override
-    public Result delete(JobSeeker jobSeeker) {
-        this.jobSeekerDao.delete(jobSeeker);
+    public Result delete(Candidate candidate) {
+        this.candidateDao.delete(candidate);
         return new SuccessResult("Deletion is successful");
     }
 

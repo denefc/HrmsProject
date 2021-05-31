@@ -14,10 +14,10 @@ import java.util.Date;
 @PrimaryKeyJoinColumn(name="user_id",referencedColumnName = "id")
 @Data
 @Entity
-@Table(name = "job_seekers")
+@Table(name = "candidates")
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class JobSeeker extends User {
+public class Candidate extends User {
     @Column(name = "first_name")
     private String firstName;
 

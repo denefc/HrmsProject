@@ -28,7 +28,7 @@ public class JobPositionManager implements JobPositionService {
     @Override
     public Result add(JobPosition jobPosition) {
         Result result=new Result(false);
-        if (positionUsed(jobPosition.getName())){
+        if (positionUsed(jobPosition.getTitle())){
             jobPositionDao.save(jobPosition);
             result=new SuccessResult("İş pozisyonu eklendi");
         }
@@ -45,7 +45,7 @@ public class JobPositionManager implements JobPositionService {
         boolean resultFlag=true;
         List<JobPosition> allUsed=getAll();
         for (JobPosition position:allUsed){
-            if (position.getName().equals(positionName)){
+            if (position.getTitle().equals(positionName)){
                 resultFlag=false;
             }
         }

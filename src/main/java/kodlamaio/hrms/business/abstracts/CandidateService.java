@@ -1,15 +1,15 @@
 package kodlamaio.hrms.business.abstracts;
 
 import kodlamaio.hrms.core.utilities.results.Result;
-import kodlamaio.hrms.entities.concretes.JobSeeker;
+import kodlamaio.hrms.entities.concretes.Candidate;
 
 import java.util.List;
 
-public interface JobSeekerService {
+public interface CandidateService {
      Result login(String email, String password);
-     Result register(JobSeeker jobSeeker);
-     Result delete(JobSeeker jobSeeker);
-     List<JobSeeker> getAll();
+     Result register(Candidate candidate);
+     Result delete(Candidate candidate);
+     List<Candidate> getAll();
      List<String> getAllEmails();
      List<String> getAllIdentificationNumber();
 }

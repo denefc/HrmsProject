@@ -2,6 +2,7 @@ package kodlamaio.hrms.api.controllers;
 
 import java.util.List;
 
+import kodlamaio.hrms.entities.concretes.Candidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,32 +11,31 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import kodlamaio.hrms.business.abstracts.JobSeekerService;
+import kodlamaio.hrms.business.abstracts.CandidateService;
 import kodlamaio.hrms.core.utilities.results.Result;
-import kodlamaio.hrms.entities.concretes.JobSeeker;
 
 @RestController
 @RequestMapping("/api/jobseekers")
-public class JobSeekersController {
+public class CandidateController {
 
-    private JobSeekerService jobSeekerService;
+    private CandidateService candidateService;
 
     @Autowired
-    public JobSeekersController(JobSeekerService jobSeekerService) {
-        this.jobSeekerService = jobSeekerService;
+    public CandidateController(CandidateService candidateService) {
+        this.candidateService = candidateService;
     }
 
     @GetMapping("/getall")
-    public List<JobSeeker> getAll(){
-        return this.jobSeekerService.getAll();
+    public List<Candidate> getAll(){
+        return this.candidateService.getAll();
     }
     @PostMapping("/register")
-    public Result add(@RequestBody JobSeeker jobSeeker) {
-        return this.jobSeekerService.register(jobSeeker);
+    public Result add(@RequestBody Candidate candidate) {
+        return this.candidateService.register(candidate);
     }
     @DeleteMapping("/delete")
-    public Result delete(@RequestBody JobSeeker jobSeeker) {
-        return this.jobSeekerService.delete(jobSeeker);
+    public Result delete(@RequestBody Candidate candidate) {
+        return this.candidateService.delete(candidate);
 
     }
 }
