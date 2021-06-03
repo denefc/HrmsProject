@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -32,13 +33,13 @@ public class JobAdvertisement {
     private int openPositions;
 
     @Column(name ="application_deadline" )
-    private LocalDate applicationDeadline;
+    private LocalDateTime  applicationDeadline;
 
     @Column(name ="is_active" )
     private boolean isActive;
 
     @Column(name ="created_date" )
-    private LocalDate createdDate;
+    private LocalDateTime createdDate;
 
     @ManyToOne()
     @JoinColumn(name = "employer_id")

@@ -27,13 +27,12 @@ public class JobAdvertisementManager implements JobAdvertisementService {
 
     @Override
     public DataResult<List<JobAdvertisement>> getAll() {
-        return new SuccessDataResult<List<JobAdvertisement>>(jobAdvertisementDao.findAll(),"Data listelendi");
+        return null;
     }
 
     @Override
-    public DataResult<List<JobAdvertisement>> getAllSorted() {
-        Sort sort=Sort.by(Sort.Direction.ASC,"maximumSalary");
-        return new SuccessDataResult<List<JobAdvertisement>>(jobAdvertisementDao.findAll(sort),"Maximum maaştan az maaşa göre listelendi");
+    public DataResult<List<JobAdvertisement>> getActiveAdvertisement() {
+        return null;
     }
 
     @Override
@@ -43,11 +42,11 @@ public class JobAdvertisementManager implements JobAdvertisementService {
 
     @Override
     public Result add(JobAdvertisement jobAdvertisement) {
-        LocalDate dateNow=LocalDate.now();
-       jobAdvertisement.setCreatedDate(dateNow);
-       jobAdvertisementDao.save(jobAdvertisement);
-       return new SuccessResult("Yeni iş ilanı başarıyla eklendi !");
+        return null;
     }
 
-
+    @Override
+    public DataResult<List<JobAdvertisement>> getActiveAndEmloyerId(int employerId) {
+        return null;
+    }
 }

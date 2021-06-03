@@ -9,10 +9,6 @@ import java.util.List;
 
 
 public interface  EmployerService {
-     Result login(String email, String password);
      Result register(Employer employer);
-     Result delete(Employer employer);
-
      List<Employer> getAll();
-     List<String> getAllEmails();
 }

@@ -7,11 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
 public class EmailSendManagerAdapter implements EmailSendService {
 
-    @Autowired
+
     private FakeEmailSendManager fakeEmailSendManager;
+
+    @Autowired
+    public EmailSendManagerAdapter(FakeEmailSendManager fakeEmailSendManager) {
+        this.fakeEmailSendManager = fakeEmailSendManager;
+    }
 
     @Override
     public void emailSend(String email) {

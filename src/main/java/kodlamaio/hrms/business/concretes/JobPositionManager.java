@@ -1,6 +1,7 @@
 package kodlamaio.hrms.business.concretes;
 
 import kodlamaio.hrms.business.abstracts.JobPositionService;
+import kodlamaio.hrms.core.utilities.results.ErrorResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
 import kodlamaio.hrms.dataAccess.abstracts.JobPositionDao;
@@ -27,28 +28,20 @@ public class JobPositionManager implements JobPositionService {
 
     @Override
     public Result add(JobPosition jobPosition) {
-        Result result=new Result(false);
-        if (positionUsed(jobPosition.getTitle())){
+        Result result=new ErrorResult("Bu job pozisyonu daha önce eklenmiş lütfen başka pozisyon giriniz");
+        if (!positionIsUsed(jobPosition.getTitle())){
             jobPositionDao.save(jobPosition);
             result=new SuccessResult("İş pozisyonu eklendi");
         }
         return result;
     }
 
-    @Override
-    public Result delete(JobPosition jobPosition) {
-        jobPositionDao.delete(jobPosition);
-        return new SuccessResult("İş pozisyonu silindi");
-    }
 
-    public boolean positionUsed(String positionName){
-        boolean resultFlag=true;
-        List<JobPosition> allUsed=getAll();
-        for (JobPosition position:allUsed){
-            if (position.getTitle().equals(positionName)){
-                resultFlag=false;
-            }
+    public boolean positionIsUsed(String positionName){
+        List<JobPosition> positions=jobPositionDao.findByTitleEquals(positionName);
+        if (positions.size()==0){
+            return false;
         }
-        return resultFlag;
+        return true;
     }
 }

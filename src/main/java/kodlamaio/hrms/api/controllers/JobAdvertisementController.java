@@ -17,9 +17,9 @@ public class JobAdvertisementController {
         this.jobAdvertisementService = jobAdvertisementService;
     }
 
-    @PostMapping("/jobAdd")
+  /*  @PostMapping("/jobAdd")
     public Result add(@RequestBody JobAdvertisement jobAdvertisement){
         return jobAdvertisementService.add(jobAdvertisement);
-    }
+    }*/
 
 }

@@ -23,8 +23,6 @@ public class CandidateManager implements CandidateService {
     private EmailCheckService emailCheckService;
     private EmailSendService emailSendService;
 
-    private List<String> emails = new ArrayList<>();
-    private List<String> identificationNumbers = new ArrayList<>();
 
     @Autowired
     public CandidateManager(EmailCheckService emailCheckService, CandidateDao candidateDao, EmailSendService emailSendService) {
@@ -34,27 +32,16 @@ public class CandidateManager implements CandidateService {
 
     }
 
-    @Override
-    public Result login(String email, String password) {
-        Result result = new ErrorResult("Giriş Başarısız!");
-        for (int i = 0; i < getAll().size(); i++) {
-            if (getAll().get(i).getEmail().equals(email) && getAll().get(i).getPassword().equals(password)) {
-                result = new SuccessResult("Giriş Başarılı!");
-            }
-        }
-        return result;
-    }
 
     @Override
     public Result register(Candidate candidate) {
-        Result result = new ErrorResult("Kayıt Başarısız!");
-        if (emailCheckService.emailCheck(candidate.getEmail())
-                && emailIsItUsed(candidate.getEmail())
-                && identificationNumberIsItUsed(candidate.getIdentificationNumber())
-                ) {
-            emailSendService.emailSend(candidate.getEmail());
-            this.candidateDao.save(candidate);
-            result = new SuccessResult("Kayıt Başarılı.");
+        Result result=new ErrorResult("Kayıt Başarısız Lütfen emailinizi doğru formatta girdiğinize dikkat ediniz veya daha önce kayıt yapmış olabilirsinz");
+        if (emailCheckService.emailCheck(candidate.getEmail())&&
+                !emailIsUsed(candidate.getEmail())
+                && !identificationNumberIsUsed(candidate.getIdentificationNumber())){
+             emailSendService.emailSend(candidate.getEmail());
+             this.candidateDao.save(candidate);
+             result = new SuccessResult("Kayıt Başarılı.Mailinizi kontrol edin lütfen.");
         }
         return result;
     }
@@ -64,42 +51,23 @@ public class CandidateManager implements CandidateService {
         return this.candidateDao.findAll();
     }
 
-    @Override
-    public List<String> getAllEmails() {
-        for (int i = 0; i < getAll().size(); i++) {
-            emails.add(getAll().get(i).getEmail());
+
+    public Boolean emailIsUsed(String email) {
+        //liste boş dönerse kullanılmamıştır
+        List<Candidate>candidatesEmails=candidateDao.findByEmailEquals(email);
+        if (candidatesEmails.size()==0){
+            return false;
         }
-        return emails;
+        return true;
     }
 
-    @Override
-    public List<String> getAllIdentificationNumber() {
-        for (int i = 0; i < getAll().size(); i++) {
-            identificationNumbers.add(getAll().get(i).getIdentificationNumber());
+    public boolean identificationNumberIsUsed(String identificationNumber) {
+        //liste boş dönerse kullanılmamıştır
+        List<Candidate>candidatesIds=candidateDao.findByIdentificationNumberEquals(identificationNumber);
+        if (candidatesIds.size()==0){
+            return false;
         }
-        return identificationNumbers;
-    }
-
-    public boolean emailIsItUsed(String email) {
-        boolean result = true;
-        if (getAllEmails().contains(email)) {
-            result = false;
-        }
-        return result;
-    }
-
-    public boolean identificationNumberIsItUsed(String identificationNumber) {
-        boolean result = true;
-        if (getAllIdentificationNumber().contains(identificationNumber)) {
-            result = false;
-        }
-        return result;
-    }
-
-    @Override
-    public Result delete(Candidate candidate) {
-        this.candidateDao.delete(candidate);
-        return new SuccessResult("Deletion is successful");
+        return true;
     }
 
 }

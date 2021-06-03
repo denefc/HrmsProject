@@ -2,6 +2,8 @@ package kodlamaio.hrms.api.controllers;
 
 import java.util.List;
 
+import kodlamaio.hrms.core.utilities.results.DataResult;
+import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
 import kodlamaio.hrms.entities.concretes.Candidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,16 +28,12 @@ public class CandidateController {
     }
 
     @GetMapping("/getall")
-    public List<Candidate> getAll(){
-        return this.candidateService.getAll();
+    public DataResult<List<Candidate>> getAll(){
+        return new SuccessDataResult<List<Candidate>>(candidateService.getAll(),"Data başarıyla dönüldü");
     }
     @PostMapping("/register")
     public Result add(@RequestBody Candidate candidate) {
         return this.candidateService.register(candidate);
     }
-    @DeleteMapping("/delete")
-    public Result delete(@RequestBody Candidate candidate) {
-        return this.candidateService.delete(candidate);
 
-    }
 }
