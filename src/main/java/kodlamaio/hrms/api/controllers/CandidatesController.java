@@ -18,12 +18,12 @@ import kodlamaio.hrms.core.utilities.results.Result;
 
 @RestController
 @RequestMapping("/api/jobseekers")
-public class CandidateController {
+public class CandidatesController {
 
     private CandidateService candidateService;
 
     @Autowired
-    public CandidateController(CandidateService candidateService) {
+    public CandidatesController(CandidateService candidateService) {
         this.candidateService = candidateService;
     }
 

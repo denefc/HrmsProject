@@ -4,6 +4,7 @@ package kodlamaio.hrms.entities.concretes;
 import javax.persistence.*;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,6 +28,11 @@ public class JobPosition {
     private String title;
 
     @OneToMany(mappedBy = "jobPosition")
+    @JsonIgnore
     private List<JobAdvertisement> jobAdvertisements;
+
+    @OneToOne(mappedBy = "jobPosition")
+    private JobExperience jobExperience;
+
 
 }
