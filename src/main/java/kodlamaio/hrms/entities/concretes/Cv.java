@@ -47,6 +47,10 @@ public class Cv {
     @JsonIgnore
     private List<Language> language;
 
+    @OneToOne(mappedBy = "cv")
+    @JsonIgnore
+    private CvPhoto cvPhoto;
+
     @ManyToOne
     @JoinColumn(name = "candidate_id")
     @JsonIgnore
